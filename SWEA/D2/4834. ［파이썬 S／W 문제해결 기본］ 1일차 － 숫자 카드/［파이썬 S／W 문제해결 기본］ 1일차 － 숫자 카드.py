@@ -1,21 +1,18 @@
 T = int(input())
-for tc in range(1,T+1):
-    # N : 카드 장수
+
+for tc in range(1, T+1):
     N = int(input())
-    # arr : N개의 숫자
-    arr = input()
+    numbers = input()
+    count = [0] * 10
 
-    # 개수 세기
-    count = [0]*10
-    for i in arr:
-        count[int(i)] += 1
+    for number in numbers:
+        count[int(number)] += 1
 
-    # 개수 가장 큰 거 찾기
-    max_v = 0
-    idx_v = 0
-    for j in range(len(count)):
-        if max_v <= count[j]:
-            max_v = count[j]
-            idx_v = j
+    max_count = max(count)
 
-    print(f'#{tc} {idx_v} {max_v}')
+    max_num = 0
+    for num in range(10):
+        if count[num] == max_count:
+            max_num = num
+
+    print(f'#{tc} {max_num} {max_count}')
