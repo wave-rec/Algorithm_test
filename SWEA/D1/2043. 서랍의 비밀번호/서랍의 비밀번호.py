@@ -1,4 +1,7 @@
 P, K = map(int, input().split())
 
-ans = P - K + 1
-print(ans)
+count = 0
+for increase in range(K, P+1):
+    count += 1
+    
+print(count)
