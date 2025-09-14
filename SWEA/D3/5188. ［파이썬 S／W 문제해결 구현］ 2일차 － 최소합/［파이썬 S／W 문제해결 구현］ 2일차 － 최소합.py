@@ -1,31 +1,27 @@
-direction = [(1, 0), (0, 1)]
+def plz(y, x, sm):
+    global min_sum
 
-def brute_force(y, x, sum_v):
-    global result
-    sum_now = sum_v + in_arr[y][x]
+    if sm >= min_sum:
+        return
 
     if y == N-1 and x == N-1:
-        if sum_now < result:
-            result = sum_now
+        min_sum = min(min_sum, sm)
         return
 
-    remain_steps = (N - 1 - y) + (N - 1 - x)
-    lower_bound = sum_now + remain_steps * min_cell
-    if lower_bound >= result:
-        return
+    if y + 1 < N:
+        plz(y+1, x, sm + arr[y+1][x])
 
-    for dy, dx in direction:
-        ny, nx = y + dy, x + dx
-        if ny < N and nx < N:
-            brute_force(ny, nx, sum_now)
+    if x + 1 < N:
+        plz(y, x+1, sm + arr[y][x+1])
 
+T = int(input())
 
-for tc in range(1, int(input()) + 1):
+for tc in range(1, T+1):
     N = int(input())
-    in_arr = [list(map(int, input().split())) for _ in range(N)]
+    arr = [list(map(int, input().split())) for _ in range(N)]
 
-    result = 10**12
-    min_cell = min(min(row) for row in in_arr)
+    min_sum = float('inf')
 
-    brute_force(0, 0, 0)
-    print(f'#{tc} {result}')
+    plz(0, 0, arr[0][0])
+
+    print(f'#{tc} {min_sum}')
