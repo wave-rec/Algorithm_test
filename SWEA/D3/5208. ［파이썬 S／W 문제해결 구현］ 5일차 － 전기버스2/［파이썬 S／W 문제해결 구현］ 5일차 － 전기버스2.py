@@ -1,30 +1,27 @@
-def solve(num, charge, cnt):
-    global ans
+def plz(cur, cnt):
+    global min_change
 
-    if cnt > ans:
+    if cnt >= min_change:
         return
 
-    if num == N:
-        if ans > cnt:
-            ans = cnt
+    if cur >= stops - 1:
+        min_change = min(min_change, cnt)
         return
 
-    if charge < battery[num] and charge > 0:
-        solve(num + 1, battery[num] - 1, cnt + 1)
-        solve(num + 1, charge - 1, cnt)
-
-    elif charge == 0:
-        solve(num + 1, battery[num] - 1, cnt + 1)
-
-    elif charge >= battery[num]:
-        solve(num + 1, charge - 1, cnt)
-
+    max_jump = battery[cur]
+    for step in range(1, max_jump + 1):
+        plz(cur + step, cnt + 1)
 
 T = int(input())
 
 for tc in range(1, T + 1):
-    ans = 1e9
-    battery = list(map(int, input().split()))
-    N = battery[0]
-    solve(2, battery[1] - 1, 0)
-    print(f'#{tc} {ans}')
+    info = list(map(int, input().split()))
+    stops = info[0]
+    battery = info[1:]
+
+    if len(battery) < stops:
+        battery += [0] * (stops - len(battery))
+
+    min_change = float('inf')
+    plz(0, -1)
+    print(f'#{tc} {min_change}')
