@@ -5,23 +5,17 @@ for tc in range(1, T+1):
     A = list(map(int, input().split()))
     B = list(map(int, input().split()))
 
-    max_num = 0
-    if M > N:
-        for i in range(M-N+1):
-            total = 0
-            for j in range(N):
-                total += A[j] * B[i + j]
+    if N > M:
+        N, M = M, N
+        A, B = B, A
 
-            if max_num < total:
-                max_num = total
+    best = -20e8
+    for start in range(M-N+1):
+        cur_sum = 0
+        for i in range(N):
+            cur_sum += A[i] * B[start+i]
 
-    else:
-        for i in range(N-M+1):
-            total = 0
-            for j in range(M):
-                total += A[i+j] * B[j]
-
-            if max_num < total:
-                max_num = total
-
-    print(f'#{tc} {max_num}')
+        if cur_sum > best:
+            best = cur_sum
+            
+    print(f'#{tc} {best}')
